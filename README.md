@@ -9,6 +9,9 @@ This branch was heavily based off of this branch: https://github.com/scaffold-et
 ---
 
 ### Checkpoint 0: 📦 install 📚
+# 🏄‍♂️ Quick Start
+
+Prerequisites: [Node (v16 LTS)](https://nodejs.org/en/download/) plus [Yarn](https://classic.yarnpkg.com/en/docs/install/) and [Git](https://git-scm.com/downloads)
 
 _TODO: Update this with appropriate links_
 
@@ -137,6 +140,12 @@ Each of these functions calculate the resulting amount of output asset using our
 Let’s create two new functions that let us deposit and withdraw liquidity. How would you write this function out? Try before taking a peak!
 
 <details markdown='1'><summary>**Solution Code (don't look until you have tried!)** </summary>
+📣 Make sure you update the `InfuraID` before you go to production. Huge thanks to [Infura](https://infura.io/) for our special account that fields 7m req/day!
+
+# 🏃💨 Speedrun Ethereum
+Register as a builder [here](https://speedrunethereum.com) and start on some of the challenges and build a portfolio.
+
+# 💬 Support Chat
 
 ```
 function deposit() public payable returns (uint256) {
@@ -214,145 +223,4 @@ In 00_deploy_your_contracts.js, you'll have to write in the necessary code to ge
 
 As well, make sure that the tags are updated to your contract names, it should be something like `module.exports.tags = ["YourContract"];` and you'll want to change it to:
 
-`module.exports.tags = ["Balloons", "DEX"];`
-
-**Further Check-Ups between DEX in Ch-3 and Ch-5**
-
-TODO: CLEAN THIS DOC UP
-
-What's in Ch-5 but not Ch-3
-_Imports_
-Blockies
-Missing Button and List
-DownloadOutlined and UploadOutlined
-
-```
-import { Card, Col, Divider, Input, Row } from "antd"; 😎
-import { useBalance, useContractReader, useBlockNumber } from "eth-hooks"; 😎
-.
-.
-.
-importing Address, TokenBalance are coming from their respectively named subdirectories: "./Address;," and "./TokenBalance;" 😎
-.
-.
-.
-export default function DEX(props) {etc.} <-- this line may have the wrong name, be careful because you are likely exporting Dex, not DEX. --> challnege 3 has Dex, ch5 has DEX
-.
-.
-.
-  const ethBalance = useBalance(contractAddress, props.localProvider);
-😭 breaks challenge 3 code!
-.
-const tx = Transactor(props.injectedProvider...) is different than challenge 3 set up for const tx... in ch3 it is set up so we do not use injectedProvider 😎
-.
-.
-.
-const contractAddress = ternary operators in challenge5, whereas in challenge3 it is just direct, no ternary.
-.
-.
-.
-const tokenBalance = useTokenBalance --> this is different but we think it isn't breaking changes.
-.
-.
-.
-nonce is in challenge 5 and not challenge 3.
-.
-.
-let swapTx differs just cause of nonce showing up.
-.
-.
-consolelogging extras
-.
-.
-let addingEth = 0 is in challenge 5.
-.
-.
-Balloons button is in Challenge 3 DEX not Challenge 5 DEX
-
-```
-
-### Front-End (without the debug tab)
-
-So the debug tab was taken care, or should be working now if all pointers have been corrected and variables instantiated, respectively.
-
-The front-end is brought in through several steps.
-
-State the aspects within the actual front-end display. First, find the comment in your `App.jsx`:
-`{/* pass in any web3 props to this Home component. For example, yourLocalBalance */}`
-
-There you will see the debug code blob below it, it is here where you will outline details for your home-page. Follow the medium blog post and you will see two inputs to bring into your `App.jsx` file:
-
-**TODO: NOTE TO SELF TO FIX THIS PART AS I'M NOT GETTING THE DEX TO LOAD ON THE FRONT END! ONLY BALLOONS :(**
-
-```
-<DEX
-  address={address}
-  injectedProvider={injectedProvider}
-  localProvider={localProvider}
-  mainnetProvider={mainnetProvider}
-  readContracts={readContracts}
-  price={price}
-/>
-
-<Contract
-  title={"🎈 Balloons"}
-  name={"Balloons"}
-  show={["balanceOf","approve"]}
-  provider={localProvider}
-  address={address}
-/>
-```
-
-Your front-end should now load accordingly!
-
-In App.jsx, look at line 460 onwards at the Dex component, and then the Contracts for DEX and Balloons. This is where they are loaded onto the main UI. With these, the user can enter the amount of ETH or tokens they want to swap, and the chart will display how the price is calculated. You can also visualize how larger swaps result in more slippage and less output asset. You can also deposit and withdraw from the liquidity pool, earning fees.
-
----
-
-### Checkpoint 7: 💾 Deploy it! 🛰
-
-📡 Edit the `defaultNetwork` in `packages/hardhat/hardhat.config.js`, as well as `targetNetwork` in `packages/react-app/src/App.jsx`, to [your choice of public EVM networks](https://ethereum.org/en/developers/docs/networks/)
-
-👩‍🚀 You will want to run `yarn account` to see if you have a **deployer address**
-
-🔐 If you don't have one, run `yarn generate` to create a mnemonic and save it locally for deploying.
-
-🛰 Use an [instantwallet.io](https://instantwallet.io) to fund your **deployer address** (run `yarn account` again to view balances)
-
-> 🚀 Run `yarn deploy` to deploy to your public network of choice (😅 wherever you can get ⛽️ gas)
-
-🔬 Inspect the block explorer for the network you deployed to... make sure your contract is there.
-
-👮 Your token contract source needs to be **verified**... (source code publicly available on the block explorer)
-
-### Checkpoint 8: 📜 Contract Verification
-
-Update the api-key in packages/hardhat/package.json file. You can get your key [here](https://etherscan.io/myapikey).
-
-![Screen Shot 2021-11-30 at 10 21 01 AM](https://user-images.githubusercontent.com/9419140/144075208-c50b70aa-345f-4e36-81d6-becaa5f74857.png)
-
-> Now you are ready to run the `yarn verify --network your_network` command to verify your contracts on etherscan 🛰
-
-This will be the URL you submit to [SpeedRun](https://speedrunethereum.com).
-
----
-
-### Checkpoint 9: 🚢 Ship it! 🚁
-
-📦 Run `yarn build` to package up your frontend.
-
-💽 Upload your app to surge with `yarn surge` (you could also `yarn s3` or maybe even `yarn ipfs`?)
-
-🚔 Traffic to your url might break the [Infura](https://infura.io/) rate limit, edit your key: `constants.js` in `packages/ract-app/src`.
-
----
-
-> 💬 Problems, questions, comments on the stack? Post them to the [🏗 scaffold-eth developers chat](https://t.me/joinchat/F7nCRK3kI93PoCOk)
-
-```
-
-```
-
-```
-
-```
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#github.com/scaffold-eth/scaffold-eth)
